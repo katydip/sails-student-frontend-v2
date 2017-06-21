@@ -4,76 +4,66 @@
   //sets value of student id in hidden delete form and submits form
   //not completely ideal but wanted to take advantage of flash messages in sails
   function deleteRecord(record_id) {
-    $("#deleteform input[name=student_id]").val(record_id);
+    $("#deleteform input[name=student_class_id]").val(record_id);
     $("#deleteform").submit();
   }
 
-  function getStudent(record_id) {
-    return $.get("http://localhost:1337/student/" + record_id, function(data) {
-      console.log("got student");
+  function getStudentClass(record_id) {
+    return $.get("http://localhost:1337/student_class/" + record_id, function(data) {
+      console.log("got student class");
     })
   }
 
   $(function() {
 
 //I brought this in from the read.js to make it a DataTable
-    $('#studentTable').DataTable({
+    $('#student_classTable').DataTable({
       dom: 'Bfrtip',
       buttons: [
         'copy', 'csv', 'excel', 'pdf', 'print'
       ],
       colReorder: true,
-      "scrollX": true,
+      "scrollX": true
       //this columnDefs makes the 7th column that stores the buttons wider
-      columnDefs: [
-        {width: '20%', targets:7}
-      ]
+      // columnDefs: [
+      //   {width: '20%', targets:7}
+      // ]
     });
 
 //jquery validate the fields
-  var validator = $("#manageStudentForm").validate({
+  var validator = $("#manageStudentClassForm").validate({
       errorClass: "text-danger",
       rules: {
-        first_name: {
-          required: true,
-          minlength: 2
+        student_id: {
+          required: true
         },
-        last_name: {
-          required: true,
-          minlength: 2
-        },
-        start_date: {
-          required: true,
-          dateISO: true
+        class_id: {
+          required: true
         }
       },
       messages: {
-        first_name: {
-          required: "We need your first name to contact you",
-          minlength: jQuery.validator.format("At least 2 characters required for first name!")
+        student_id: {
+          required: "Student ID required",
+          // minlength: jQuery.validator.format("...!")
         },
-        last_name: {
-          required: "We need your last name to contact you",
-          minlength: jQuery.validator.format("At least 2 characters required for last name!")
-        },
-        start_date: {
-          required: "We need a valid date to contact you",
-          dateISO: jQuery.validator.format("Please enter a valid format yyyy-mm-dd")
+        class_id: {
+          required: "Class ID required",
+          // minlength: jQuery.validator.format("...!")
         }
       }
     });
 
 
     //initialize variables for items in the DOM we will work with
-    let manageStudentForm = $("#manageStudentForm");
-    let addStudentButton = $("#addStudentButton");
+    let manageStudentClassForm = $("#manageStudentClassForm");
+    let addStudentClassButton = $("#addStudentClassButton");
 
     //add student button functionality
-    addStudentButton.click(function() {
+    addStudentClassButton.click(function() {
       $("input").val('');
       validator.resetForm();
-      manageStudentForm.attr("action", "/create_student");
-      manageStudentForm.dialog({
+      manageStudentClassForm.attr("action", "/create_student_class");
+      manageStudentClassForm.dialog({
         title: "Add Record",
         width: 700,
         modal: true,
@@ -83,20 +73,20 @@
           },
           "Submit": function() {
             //function to delete record
-            manageStudentForm.submit()
+            manageStudentClassForm.submit()
           }
         }
       });
     })
 
-    $("#studentTable").on("click", "#editButton", function(e) {
-      let recordId = $(this).data("studentid")
-      manageStudentForm.find("input[name=student_id]").val(recordId);
-      manageStudentForm.attr("action", "/update_student");
-      let student = getStudent(recordId);
+    $("#student_classTable").on("click", "#editButton", function(e) {
+      let recordId = $(this).data("studentclassid")
+      manageStudentClassForm.find("input[name=student_class_id]").val(recordId);
+      manageStudentClassForm.attr("action", "/update_student_class");
+      let student_class = getStudentClass(recordId);
 
       //populate form when api call is done (after we get student to edit)
-      student.done(function(data) {
+      student_class.done(function(data) {
         $.each(data, function(name, val) {
           var $el = $('[name="' + name + '"]'),
             type = $el.attr('type');
@@ -114,7 +104,7 @@
         });
       })
 
-      manageStudentForm.dialog({
+      manageStudentClassForm.dialog({
         title: "Update Record",
         width: 700,
         modal: true,
@@ -124,15 +114,15 @@
           },
           Submit: function() {
             //function to delete record
-            manageStudentForm.submit()
+            manageStudentClassForm.submit()
           }
         }
       });
     })
 
 
-    $("#studentTable").on("click", "#deleteButton", function(e) {
-      let recordId = $(this).data("studentid")
+    $("#student_classTable").on("click", "#deleteButton", function(e) {
+      let recordId = $(this).data("studentclassid")
       $("#deleteConfirm").dialog({
         title: "Confirm Delete",
         modal: true,
@@ -140,7 +130,7 @@
           Cancel: function() {
             $(this).dialog("close");
           },
-          "Delete Student": function() {
+          "Delete StudentClass": function() {
             //function to delete record
             deleteRecord(recordId);
           }

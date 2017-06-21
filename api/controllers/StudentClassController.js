@@ -7,8 +7,8 @@
 
 var Client = require('node-rest-client').Client;
 var client = new Client();
-var endpoint = "http://localhost:1337/student";
-var view = "manage_students";
+var endpoint = "http://localhost:1337/student_class";
+var view = "manage_student_classes";
 
 // this solves the problem to allow us to have null in a major_id field when we submit
 function clean_request_body(request_body){
@@ -48,9 +48,9 @@ module.exports = {
   read: function (req, res) {
 
     client.get(endpoint, function (data, response) {
-        return res.view(view, {students: data});
+        return res.view(view, {studentclasses: data});
     }).on('error', function (err) {
-        return res.view(view, {error: { message: "There was an error getting the students"}});
+        return res.view(view, {error: { message: "There was an error getting the student classes"}});
     });
 
   },
@@ -61,15 +61,15 @@ module.exports = {
    */
   update: function (req, res) {
 
-    let studentId = req.body.student_id;
-    delete req.body.student_id;
+    let student_classId = req.body.student_class_id;
+    delete req.body.student_class_id;
 
     var args = {
         data: clean_request_body(req.body),
         headers: { "Content-Type": "application/json" }
     };
 
-    client.put(endpoint + "/" + studentId, args, function (data, response) {
+    client.put(endpoint + "/" + student_classId, args, function (data, response) {
 
       if(response.statusCode != "200"){
           req.addFlash("error", data.message);
@@ -87,7 +87,7 @@ module.exports = {
    */
   delete: function (req, res) {
 
-    client.delete(endpoint + "/" + req.body.student_id, function (data, response) {
+    client.delete(endpoint + "/" + req.body.student_class_id, function (data, response) {
 
       if(response.statusCode != "200"){
           req.addFlash("error", data.message);

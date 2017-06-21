@@ -1,0 +1,64 @@
+<ol class="breadcrumb">
+    <li>Home</a></li>
+    <li class="active">Majors</a></li>
+
+</ol>
+
+<br/>
+
+<%- partial ('partials/statusmessage.ejs') %>
+
+<h2>Manage Majors</h2>
+<button class="btn btn-success" id="addMajorButton">Add Major</button>
+<table class="table table-striped table-bordered" id="majorTable" style="width:100%">
+  <thead>
+    <tr>
+      <th>Major ID</th>
+      <th>Major</th>
+      <th>SAT Score</th>
+      <th>Admin</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% if(typeof majors != "undefined" && majors.length > 0){ %>
+    <% majors.forEach(function(major){ %>
+      <tr>
+        <td><%= major.major_id %></td>
+        <td><%= major.major %></td>
+        <td><%= major.sat %></td>
+        <td class="text-center">
+          <button class="btn btn-primary" id="editButton" data-majorid="<%= major.major_id %>">edit</button>
+          <button class="btn btn-danger" id="deleteButton" data-majorid="<%= major.major_id %>">delete</button>
+        </td>
+      </tr>
+    <% }) %>
+  <% } %>
+  </tbody>
+</table>
+
+<div style="display: none;" id="deleteConfirm">Are you sure you want to delete this record?</div>
+
+<!-- this is the form to delete the major, display none means it is hidden until clicked -->
+<form action="/delete_major" method="POST" style="display: none;" id="deleteform">
+  <input type="hidden" name="major_id" value="eric">
+</form>
+
+<!-- this form to add the major is display:none so it is hidden until we click to edit major -->
+<form style="display: none;" action="" method="POST" class="form-horizontal" id="manageMajorForm">
+  <input type="hidden" name="major_id">
+  <div class="form-group">
+    <label for="major" class="col-sm-2 control-label">Major</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="major" name="major" placeholder="Major" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="sat" class="col-sm-2 control-label">SAT Score</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="sat" name="sat"  placeholder="SAT Score" required>
+    </div>
+  </div>
+</form>
+
+<!-- we will need to create another page just like this for manage grades etc.  -->
+<!-- this will connect to the manage majors .js file..  -->
