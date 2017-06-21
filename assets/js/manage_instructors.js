@@ -14,6 +14,22 @@
     })
   }
 
+  //erics quick thought for generic shit
+  // function buildIDropdown(model, keyfield, displayfield){
+  //   promise = $.get("http://localhost:1337/"+model+"/");
+  //
+  //   let dropdown = "";
+  //   promise.done(function(data){
+  //     dropdown += "<select class='form-control' name='"+keyfield+"'>";
+  //     $.each(data, function(index, value){
+  //       dropdown += `<option value='${value[field]}'>${value[displayfield]}</option>`
+  //     })
+  //     dropdown += "</select>";
+  //   }).done(function(){
+  //     $("#majorDropdown").html(dropdown);
+  //   })
+  // }
+
   $(function() {
 
 //I brought this in from the read.js to make it a DataTable
@@ -24,7 +40,7 @@
       ],
       colReorder: true,
       "scrollX": true
-      //this columnDefs makes the 7th column that stores the buttons wider
+      // columnDefs makes the 0 index 7th column that stores the buttons wider
       // columnDefs: [
       //   {width: '20%', targets:7}
       // ]
@@ -97,6 +113,7 @@
 
     $("#instructorTable").on("click", "#editButton", function(e) {
       let recordId = $(this).data("instructorid")
+      validator.resetForm();
       manageInstructorForm.find("input[name=instructor_id]").val(recordId);
       manageInstructorForm.attr("action", "/update_instructor");
       let instructor = getInstructor(recordId);
@@ -155,6 +172,19 @@
     })
 
   })
+
+   promise = $.get("http://localhost:1337/major");
+
+   let dropdown = "";
+   promise.done(function(data){
+     dropdown += "<select class='form-control' name='major_id'>";
+     $.each(data, function(index, value){
+       dropdown += `<option value='${value.major_id}'>${value.major}</option>`
+     })
+     dropdown += "</select>";
+   }).done(function(){
+     $("#majorDropdown").html(dropdown);
+   })
 
 })();
 

@@ -88,6 +88,7 @@ $('#assignmentTable').DataTable({
 
     $("#assignmentTable").on("click", "#editButton", function(e) {
       let recordId = $(this).data("assignmentid")
+      validator.resetForm();
       manageAssignmentForm.find("input[name=assignment_id]").val(recordId);
       manageAssignmentForm.attr("action", "/update_assignment");
       let assignment = getAssignment(recordId);

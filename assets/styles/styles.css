@@ -5,27 +5,42 @@ body {
 table {
   margin-top: 10px;
 }
-#hero {
+th, tr {
+  white-space: nowrap;
+}
+.jumbotron {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 650px;
+  background-image: url("../images/jmu1.jpg");
   background-size: cover;
   background-repeat: no-repeat;
-  background-color: blue;
-  /*background-attachment: fixed;*/
-  /*background-image: url("../assets/images/jmu2.jpeg");*/
+  color: white;
+  font-size: 60px;
+  font-style: bold;
+}
+h2 {
+  font-size: 34px;
+}
+h3 {
+  font-size: 30px;
 }
 
 /* Customize container */
 @media (min-width: 600px) {
     .container {
-        max-width: 768px;
+        max-width: 900px;
     }
 }
 /* Customize container */
 @media (min-width: 800px) {
     .container-fluid {
         max-width: 1024px;
+    }
+}
+@media (min-width: 991px) {
+    .table {
+        max-width: 1024px !important;
     }
 }

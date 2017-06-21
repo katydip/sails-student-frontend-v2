@@ -76,6 +76,7 @@
 
     $("#gradeTable").on("click", "#editButton", function(e) {
       let recordId = $(this).data("gradeid")
+      validator.resetForm();
       manageGradeForm.find("input[name=grade_id]").val(recordId);
       manageGradeForm.attr("action", "/update_grade");
       let grade = getGrade(recordId);

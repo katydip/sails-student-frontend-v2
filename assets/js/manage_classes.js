@@ -66,7 +66,7 @@
 
     //add class button functionality
     addClassButton.click(function() {
-      $("input").val('');
+      // $("input").val('');
       validator.resetForm();
       manageClassForm.attr("action", "/create_class");
       manageClassForm.dialog({
@@ -87,6 +87,7 @@
 
     $("#classTable").on("click", "#editButton", function(e) {
       let recordId = $(this).data("classid")
+      validator.resetForm();
       manageClassForm.find("input[name=class_id]").val(recordId);
       manageClassForm.attr("action", "/update_class");
       let currentClass = getClass(recordId);

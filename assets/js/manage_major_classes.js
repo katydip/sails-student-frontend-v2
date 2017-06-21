@@ -81,6 +81,7 @@
 
     $("#major_classTable").on("click", "#editButton", function(e) {
       let recordId = $(this).data("majorclassid")
+      validator.resetForm();
       manageMajorClassForm.find("input[name=major_class_id]").val(recordId);
       manageMajorClassForm.attr("action", "/update_major_class");
       let major_class = getMajorClass(recordId);

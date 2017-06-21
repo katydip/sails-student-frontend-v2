@@ -84,6 +84,7 @@
 
     $("#majorTable").on("click", "#editButton", function(e) {
       let recordId = $(this).data("majorid")
+      validator.resetForm();
       manageMajorForm.find("input[name=major_id]").val(recordId);
       manageMajorForm.attr("action", "/update_major");
       let major = getMajor(recordId);

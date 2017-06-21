@@ -91,6 +91,7 @@
 
     $("#studentTable").on("click", "#editButton", function(e) {
       let recordId = $(this).data("studentid")
+      validator.resetForm();
       manageStudentForm.find("input[name=student_id]").val(recordId);
       manageStudentForm.attr("action", "/update_student");
       let student = getStudent(recordId);

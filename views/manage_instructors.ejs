@@ -16,7 +16,7 @@
       <th>Instructor ID</th>
       <th>First Name</th>
       <th>Last Name</th>
-      <th>Major ID</th>
+      <th>Major</th>
       <th>Years of Experience</th>
       <th>Tenured</th>
       <th>Admin Buttons</th>
@@ -29,9 +29,10 @@
         <td><%= instructor.instructor_id %></td>
         <td><%= instructor.first_name %></td>
         <td><%= instructor.last_name %></td>
-        <td><%= instructor.major_id %></td>
+        <!-- <td><%= instructor.major_id %></td> -->
+        <td><%= instructor.hasOwnProperty('major_id') ? instructor.major_id.major : '' %></td>
         <td><%= instructor.years_of_experience %></td>
-        <td><%= instructor.tenured %></td>
+        <td><%= (instructor.tenured == 1) ? "Yes" : "No" %></td>
         <td class="text-center">
           <button class="btn btn-primary" id="editButton" data-instructorid="<%= instructor.instructor_id %>">edit</button>
           <button class="btn btn-danger" id="deleteButton" data-instructorid="<%= instructor.instructor_id %>">delete</button>
@@ -66,8 +67,8 @@
   </div>
   <div class="form-group">
     <label for="major_id" class="col-sm-2 control-label">Major ID</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" id="major_id" name="major_id">
+    <div id="majorDropdown" class="col-sm-10">
+      <!-- <input type="text" class="form-control" id="major_id" name="major_id"> -->
     </div>
   </div>
   <div class="form-group">
@@ -79,7 +80,11 @@
   <div class="form-group">
     <label for="tenured" class="col-sm-2 control-label">Tenured</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="tenured" name="tenured" placeholder="Tenured">
+      <!-- <input type="text" class="form-control" id="tenured" name="tenured" placeholder="Tenured"> -->
+      <select class="form-control" id="tenured" name="tenured">
+        <option value="1">Yes</option>
+        <option selected value="0">No</option>
+      </select>
     </div>
   </div>
 </form>
